@@ -1,0 +1,34 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-8">
+			<form (ngSubmit)="onSubmit(f)" #f='ngForm'>
+				<div class="form-group">
+					<label for="itemName">Item Name:</label>
+					<input type="text" class="form-control" id="itemName"
+          ngModel name = "itemName">
+				</div>
+				<div class="form-group">
+					<label for="itemCost">Item Cost:</label>
+					<input type="number" class="form-control" id="itemCost"
+          ngModel name = "itemCost">
+				</div>
+				<div class="form-group">
+					<label for="barCode">Barcode:</label>
+					<input type="number" class="form-control" id="barCode"
+          ngModel name = "barcode">
+				</div>
+				<button type="submit" class="btn btn-success">Add</button>
+				<button type="button" class="btn btn-danger">Reset</button>
+			</form>
+
+<hr>
+
+  <ul class="list-group">
+
+  <li *ngFor = 'let item of items' class="list-group-item">{{item.itemName}} <span class="badge">{{item.itemCost}}</span>
+    </li>
+</ul>
+
+		</div>
+	</div>
+</div>
