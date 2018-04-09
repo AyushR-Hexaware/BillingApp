@@ -1,0 +1,38 @@
+
+<div class="container">
+	<br/>
+					<hr>
+						<h1 align="center">{{Company}}</h1> 
+						<h5 align="center">{{TagLine}}</h5> 
+						<hr>
+
+			<form (ngSubmit)="onSubmit(f)" #f='ngForm'>
+				<div class="form-group">
+					<label for="email">Email address:</label>
+					<input type="email" class="form-control" id="email"
+          placeholder="Enter email Id" 
+          ngModel
+          name = "userId">
+				</div>
+				<div class="form-group">
+					<label for="pwd">Password:</label>
+					<input type="password" class="form-control" id="pwd"
+          placeholder="Enter Password"
+          ngModel
+          name = "password">
+				</div>
+				<div class="checkbox">
+					<label><input type="checkbox"> Remember me</label>
+				</div>
+				<button type="submit" class="btn btn-default">Submit</button>
+
+			</form>
+
+			
+				<footer>
+						<hr>
+					   <p> &#x2661; Created by Amar & Ayush &#x2661;</p>
+						<hr>
+					  </footer>
+			
+</div>

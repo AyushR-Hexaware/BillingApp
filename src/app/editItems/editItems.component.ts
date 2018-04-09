@@ -1,28 +1,59 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Item } from '../model/item';
 import { NgForm } from "@angular/forms"
 import { EditItemsService } from './editItems.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-editItems',
-  templateUrl: './editItems.component.html'
+  templateUrl: './editItems.component.html',
+  styleUrls: ['editItems.component.css']
 })
-export class EditItemsComponent implements OnInit {
+export class EditItemsComponent implements OnInit, OnDestroy {
 
+  subscription: Subscription;
   items: Item[];
+  itemName: string;
+  itemCost: number;
+  barcode: number;
+
   constructor(private editItemService: EditItemsService) { }
 
   ngOnInit() {
-    console.log('in init');
-    this.items = this.editItemService.getItems();
+    this.resetForm();
+    this.subscription = this.editItemService.itemsChanged.
+      subscribe(
+      (items: Item[]) => {
+        this.items = items;
+      }
+      )
+    this.editItemService.getItems();
   }
 
   onSubmit(form: NgForm) {
-    console.log(form.value.itemName);
-    let item: Item = new Item(form.value.itemName, form.value.itemCost, form.value.barcode);
 
-    this.editItemService.saveItems(item);
+    console.log("form values " + form.value.itemName);
+    this.editItemService.addItem(form.value);
+  }
 
+  resetForm(form?: NgForm) {
+    if (form != null) {
+      form.reset();
+      this.editItemService.selectedItem = {
+        $key: null,
+        itemName: '',
+        itemCost: 0,
+        barcode: 0
+      }
+    }
+  }
+
+  onClick(item: Item) {
+    this.editItemService.selectedItem = item;
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }
